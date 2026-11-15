@@ -87,17 +87,28 @@ def pipe(name):
 
 # ───────────────────────── data ─────────────────────────
 def load(lab_path, q_path):
-    lab = pd.read_excel(lab_path, sheet_name='FabricatedSensor')
+    """Sensor file: first sheet; columns ID, |Z| (ohm), Na+, Cl-, K+ (mV), with
+    optional 'sd' columns that are ignored. Donor IDs '#1'..'#10' correspond to
+    questionnaire codes MB016..MB025 in order."""
+    lab = pd.read_excel(lab_path, sheet_name=0)
     lab.columns = [str(c).strip() for c in lab.columns]
     ren = {}
     for c in lab.columns:
         lc = c.lower()
-        if 'mother' in lc or 'id' == lc: ren[c] = 'Sample_ID'
-        elif lc.startswith('ec'): ren[c] = 'EC_Ohm'
+        if lc.startswith('sd') or lc.startswith('unnamed') or 'std' in lc:
+            continue
+        if 'id' in lc or 'mother' in lc: ren[c] = 'Sample_ID'
+        elif lc.startswith('ec') or '|z|' in lc or 'ohm' in lc: ren[c] = 'EC_Ohm'
         elif lc.startswith('k'): ren[c] = 'K_mV'
         elif lc.startswith('na'): ren[c] = 'Na_mV'
         elif lc.startswith('cl'): ren[c] = 'Cl_mV'
-    lab = lab.rename(columns=ren)
+    lab = lab[list(ren)].rename(columns=ren)
+    missing = {'Sample_ID', 'EC_Ohm', 'K_mV', 'Na_mV', 'Cl_mV'} - set(lab.columns)
+    assert not missing, f"sensor file is missing columns: {missing}"
+    def norm_id(v):
+        v = str(v).strip()
+        return f"MB{15 + int(v[1:]):03d}" if v.startswith('#') and v[1:].isdigit() else v
+    lab['Sample_ID'] = lab['Sample_ID'].map(norm_id)
     for c in ['K_mV', 'Na_mV', 'Cl_mV', 'EC_Ohm']:
         lab[c] = pd.to_numeric(lab[c])
     lab['Na_K_Ratio'] = lab.Na_mV / lab.K_mV
