@@ -1,0 +1,10 @@
+# IMPORTANT: set scikit-learn to the exact version that created the .pkl files.
+# On the training machine run:  python -c "import sklearn; print(sklearn.__version__)"
+# and replace the version below. Pickled models may not load with another version.
+scikit-learn==REPLACE_WITH_TRAINING_VERSION
+streamlit>=1.40
+pandas>=2.0
+numpy>=1.26
+joblib>=1.3
+scipy>=1.11
+openpyxl>=3.1

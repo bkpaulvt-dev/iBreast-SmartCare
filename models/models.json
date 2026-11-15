@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Breast inflammation",
+    "file": "Breast_Inflammation.pkl",
+    "algorithm": "SVM (RBF)",
+    "features": ["Na_mV", "Na_K_Ratio"]
+  },
+  {
+    "name": "Mastitis",
+    "file": "Mastitis_Diagnosis.pkl",
+    "algorithm": "Gaussian naive Bayes",
+    "features": ["Cl_mV", "Na_Cl_Ratio"]
+  },
+  {
+    "name": "Blocked ducts",
+    "file": "Blocked_Ducts.pkl",
+    "algorithm": "Random forest",
+    "features": ["Cl_mV", "Na_K_Ratio"]
+  }
+]
