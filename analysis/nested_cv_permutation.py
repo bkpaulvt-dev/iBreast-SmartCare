@@ -54,10 +54,12 @@ FEATURES = ['K_mV', 'Na_mV', 'Cl_mV', 'EC_Ohm',
 SIZES = [2, 3, 4, 5]
 TASKS = {'Inflammation': 'Breast inflammation',
          'Mastitis_Diagnosed': 'Mastitis',
-         'Blocked_Ducts': 'Blocked ducts'}
+         'Blocked_Ducts': 'Blocked ducts',
+         'Fever': 'Fever'}
 TABLE1 = {'Inflammation': ('SVM (RBF)', ('EC_Ohm', 'Na_K_Ratio')),
           'Mastitis_Diagnosed': ('Naive Bayes', ('Cl_mV', 'Na_Cl_Ratio')),
-          'Blocked_Ducts': ('Rand Forest', ('Cl_mV', 'Na_K_Ratio'))}
+          'Blocked_Ducts': ('Rand Forest', ('Cl_mV', 'Na_K_Ratio')),
+          'Fever': ('Grad Boost', ('K_mV', 'K_Cl_Ratio'))}
 ALGO_ORDER = ['Logistic Reg', 'SVM (RBF)', 'Rand Forest', 'Grad Boost',
               'Naive Bayes', 'KNN (k=3)']
 FAST = ['Logistic Reg', 'SVM (RBF)', 'Naive Bayes', 'KNN (k=3)']
@@ -126,6 +128,7 @@ def load(lab_path, q_path):
         'Inflammation': (q[col('breast inflammation')].str.strip() == 'Yes').astype(int),
         'Mastitis_Diagnosed': (q[col('diagnosed with mastitis')].str.strip() == 'Yes').astype(int),
         'Blocked_Ducts': (q[col('blocked milk ducts')].str.strip() == 'Yes').astype(int),
+        'Fever': (q[col('had a fever')].str.strip() == 'Yes').astype(int),
     })
     d = out.merge(lab[['Sample_ID'] + FEATURES], on='Sample_ID').sort_values('Sample_ID')
     assert len(d) == 10, f"expected 10 donors, got {len(d)}"
