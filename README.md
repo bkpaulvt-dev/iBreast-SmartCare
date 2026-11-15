@@ -6,7 +6,7 @@ Code accompanying the manuscript *[TITLE]* ([JOURNAL], [YEAR]).
 from ten donors with self-reported labels. They are not clinically validated
 and their outputs are uncalibrated classifier scores, not disease risk.
 
-- Live app: [STREAMLIT APP URL]
+- Live app: https://bkpaulvt-dev-ibreast-smartcare-appstreamlit-app-7u53gz.streamlit.app/
 - Archived release (DOI): [ZENODO DOI]
 
 ## Contents
@@ -21,7 +21,7 @@ and their outputs are uncalibrated classifier scores, not disease risk.
 ## Run the app locally
 
 ```bash
-git clone [REPOSITORY URL]
+git clone https://github.com/bkpaulvt-dev/iBreast-SmartCare.git
 cd iBreast-SmartCare
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
