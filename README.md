@@ -47,7 +47,7 @@ takes tens of core-hours; use `--perm-search 0` to skip it.
 
 ## Software versions
 
-Python [VERSION], scikit-learn [VERSION]. Pickled models are only guaranteed
+scikit-learn 1.7.2. Pickled models are only guaranteed
 to load with the scikit-learn version that created them; see `requirements.txt`.
 
 ## Data
